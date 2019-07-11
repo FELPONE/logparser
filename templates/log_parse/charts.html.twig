@@ -1,0 +1,41 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello LogParseController!{% endblock %}
+
+{% block body %}
+
+
+<div class="container-fluid">
+    <div class="row">
+        <div class="col">
+            <canvas id="methodDist" ></canvas>
+        </div>
+    <div class="col"><canvas id="answerDist" ></canvas>
+</div>
+    <div class="w-100"></div>
+    <div class="col"><div class="col"><canvas id="requestMinute" ></canvas></div>
+    <div class="col">Column</div>
+  </div>
+</div>
+
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="{{ asset('assets/js/main.js') }}"></script>
+    <script src="{{ asset('assets/js/methodDistChart.js') }}"></script>
+    <script src="{{ asset('assets/js/answerDistChart.js') }}"></script>
+    <script src="{{ asset('assets/js/requestMinuteChart.js') }}"></script>
+            
+{% endblock %}
+
+
+
+
+
+
+
+
+
+
