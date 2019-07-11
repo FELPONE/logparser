@@ -10,8 +10,6 @@ use App\Service\FileUploader;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 
-
-
 class DataController extends AbstractController
 {
     /**
@@ -70,7 +68,6 @@ class DataController extends AbstractController
         foreach($arrayFile as $log)
         {
             $responseCode = strtoupper(trim($log["response_code"]));
-            
             isset($result[$responseCode])? $result[$responseCode]++ : $result[$responseCode] = 1;
         }
         $response = new JsonResponse($result ,JsonResponse::HTTP_OK);
@@ -94,8 +91,29 @@ class DataController extends AbstractController
             isset($result[$day][$hour][$minute])? $result[$day][$hour][$minute] ++ : $result[$day][$hour][$minute] = 1;
         }
 
-        //dd($result);
+        $response = new JsonResponse($result ,JsonResponse::HTTP_OK);
+        return $response; 
+    }
 
+     /**
+     * @Route("/log/sizeDistribution", name="sizeDistribution", methods={"GET"})
+     */
+    public function sizeDistribution(String $uploadDir)
+    { 
+        $jsonFile = file_get_contents($uploadDir . '/json.txt');
+        $arrayFile = json_decode($jsonFile, 1);
+        $result = array();
+                         
+        foreach($arrayFile as $log)
+        {
+            $responseCode = (int)strtoupper(trim($log["response_code"]));
+            $sizeAnswer = (int)strtoupper(trim($log["document_size"]));
+
+            if($responseCode == 200 && $sizeAnswer < 1000)
+            {
+                isset($result[$sizeAnswer])? $result[$sizeAnswer]++ : $result[$sizeAnswer] = 1;
+            }
+        }
 
         $response = new JsonResponse($result ,JsonResponse::HTTP_OK);
         return $response; 

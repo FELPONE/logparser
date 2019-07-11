@@ -1,42 +1,46 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello LogParseController!{% endblock %}
+{% block title %}Server access{% endblock %}
 
 {% block body %}
+	<div class="container-fluid">
+		<div class="row" style="margin-top: 15em;">
+			<div class="col-sm"></div>
+			<div class="col-sm">
+				<form action="doUpload" method="post" enctype="multipart/form-data">
+					<input type="hidden" name="token" value="{{ csrf_token('upload') }}" />
+					<div class="custom-file">
+						<input type="file" name="myfile" class="custom-file-input" id="customFile">
+						<label class="custom-file-label" for="customFile">Choose file</label>
+					</div>
+					</br>
+					</br>
+					<button type="submit" class="btn btn-info">Send</button>
+				</form>
+			</div>
+			<div class="col-sm"></div>
+		</div>
+	</div>
+{% endblock %}
 
-
-<div class="container-fluid">
-	<div class="row" style="margin-top: 15em;">
-    	<div class="col-sm"></div>
-    	<div class="col-sm">
-      		<form action="doUpload" method="post" enctype="multipart/form-data">
-				<input type="hidden" name="token" value="{{ csrf_token('upload') }}" />
-  				<div class="custom-file">
-    				<input type="file" name="myfile" class="custom-file-input" id="customFile">
-    				<label class="custom-file-label" for="customFile">Choose file</label>
-  				</div>
-				</br>
-				</br>
-  				<button type="submit" class="btn btn-info">Send</button>
-			</form>
-    	</div>
-    	<div class="col-sm"></div>
-  	</div>
-</div>
-
-
+{% block footer %}
+    <!-- Footer -->
+    <footer class="py-1 bg-dark fixed-bottom" >
+        <div class="container-fluid">
+            <p class="m-0 text-center text-white">Stefano Maglione</p>
+        </div>
+         <!-- /.container -->
+    </footer>
 {% endblock %}
 
 {% block javascripts %}
-
-<script>
-	console.log("test");
-	$(".custom-file-input").on("change", function() {
-  		var fileName = $(this).val().split("\\").pop();
-  		$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
-	});
-</script>
-            
+	<script>
+		console.log("test");
+		$(".custom-file-input").on("change", function() {
+			var fileName = $(this).val().split("\\").pop();
+			$(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+		});
+	</script>   
 {% endblock %}
 
 

@@ -17,7 +17,7 @@ class FileUploader
     public function upload($uploadDir, $file, $filename) 
     {
         try {
-            $file->move($uploadDir, $filename);
+            $file->move($uploadDir, "fileUploaded.txt");
         } catch (FileException $e){
             $this->logger->error('failed to upload image: ' . $e->getMessage());
             throw new FileException('Failed to upload file');

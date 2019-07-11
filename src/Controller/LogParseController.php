@@ -10,9 +10,6 @@ use App\Service\FileUploader;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Filesystem\Filesystem;
 
-
-
-
 class LogParseController extends AbstractController
 {
 
@@ -38,7 +35,7 @@ class LogParseController extends AbstractController
     /**
      * @Route("/log/doUpload", name="upload")
      */
-    public function upload(Request $request, string $uploadDir, FileUploader $uploader, LoggerInterface $logger)
+    public function upload(Request $request, String $uploadDir, FileUploader $uploader, LoggerInterface $logger)
     {
         $token = $request->get("token");
         if (!$this->isCsrfTokenValid('upload', $token)) 
@@ -52,7 +49,7 @@ class LogParseController extends AbstractController
 
         if (empty($file)) 
         {
-            $this->addFlash('notice', 'File not specified!');
+            $this->addFlash('alert', 'File not specified!');
             return $this->redirectToRoute('log_form');
         }        
 
@@ -67,7 +64,7 @@ class LogParseController extends AbstractController
      */
     public function parse(string $uploadDir)
     {
-        $txtFile = file_get_contents($uploadDir . '/epa-http.txt');
+        $txtFile = file_get_contents($uploadDir . '/fileUploaded.txt');
         $rows = explode("\n", $txtFile);
         $result = [];
         foreach($rows as $row => $data)
@@ -112,15 +109,24 @@ class LogParseController extends AbstractController
         } catch (IOExceptionInterface $exception) {
             $this->logger->error('failed to create file: ' . $e->getMessage());
         }
-
+        
+        $this->addFlash('notice', '(' . count($result) . ' logs)');
         return $this->redirectToRoute('charts');
     }
-
+    
     /**
      * @Route("/log/charts", name="charts")
      */
     public function charts()
     {
         return $this->render('log_parse/charts.html.twig');
+    }
+
+    /**
+     * @Route("/log/downloadJson", name="downloadJson")
+     */
+    public function downloadJson($uploadDir)
+    {
+        return $this->file($uploadDir . '/json.txt');
     }
 }

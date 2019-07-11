@@ -19,4 +19,11 @@ $(document).ready(function() {
       new requestMinuteChart(value);
     }
   });
+
+  $.ajax({
+    url: "sizeDistribution",
+    success: function(value) {
+      new sizeDistributionChart(value);
+    }
+  });
 });
