@@ -75,20 +75,14 @@ class LogParseController extends AbstractController
 
             preg_match('/(^.*?)?(\[[0-9]+:[0-9]+:[0-9]+:[0-9]+\] )?(".+?") ([0-9]+)? ([0-9-]+)?/', $data, $matches);
             
-            if(!empty($matches[2]))
-            {
-                preg_match('/([0-9]+):([0-9]+):([0-9]+):([0-9]+)/', $matches[2], $date);
-            }
-
-            if(!empty($matches[3]))
-            {
-                $res = preg_match('/([A-Z]+)? (\/.*)? ([A-Z]+)?\/?([0-9]+\.[0-9])?/', $matches[3] . " ", $request);
-            } 
+            if(empty($matches[2])) continue;
             
-            if($res == 0) {
-                $this->logger->error('Bad request' . $matches[3]);
-            }
+            preg_match('/([0-9]+):([0-9]+):([0-9]+):([0-9]+)/', $matches[2], $date);
 
+            if(empty($matches[3])) continue;
+            
+            $res = preg_match('/([A-Z]+)? (\/.*)? ([A-Z]+)?\/?([0-9]+\.[0-9])?/', $matches[3] . " ", $request);
+            
             $result[$row]['host'] = !empty($matches['1']) ? $matches['1'] : ""; 
             $result[$row]['datetime']['day'] = !empty($date[1]) ? $date[1] : "";
             $result[$row]['datetime']['hour'] = !empty($date[2]) ? $date[2] : "";

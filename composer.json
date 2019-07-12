@@ -28,8 +28,11 @@
         "symfony/yaml": "4.3.*"
     },
     "require-dev": {
+        "phpunit/phpunit": "^7.5",
+        "liip/functional-test-bundle": "~2.0@alpha",
         "symfony/debug-pack": "*",
         "symfony/maker-bundle": "^1.0",
+        "symfony/phpunit-bridge": "^4.3",
         "symfony/profiler-pack": "*",
         "symfony/test-pack": "*",
         "symfony/web-server-bundle": "4.3.*"
